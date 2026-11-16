@@ -12,6 +12,11 @@ function verificaConexaoBanco(conexao) {
     console.error(`Erro ao conectar com o banco: \n${erro}`);
   });
 
+  if (conexao.readyState === 1) {
+    console.log('Conectou ao Banco com sucesso!');
+    return;
+  }
+
   conexao.once('open', () => {
     console.log('Conectou ao Banco com sucesso!');
   });

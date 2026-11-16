@@ -3,12 +3,12 @@ import RequisicaoIncorreta from "./RequisicaoIncorreta.js";
 class ErroValidacao extends RequisicaoIncorreta {
     constructor(erroMongoose) {
 
-        // Extrais todas as mensagens de erro do Mongoose e junta em uma string
-        const mensangensErros = Object.values(erroMongoose.errors)
+        // Extrai as mensagens de erro do Mongoose e junta em uma string.
+        const mensagensErros = Object.values(erroMongoose.errors)
             .map(e => e.message)
             .join('; ');
 
-        super(`Erro de validacao de dados: ${mensangensErros}`)    
+        super(`Erro de validação de dados: ${mensagensErros}`);
 
     }
 };
