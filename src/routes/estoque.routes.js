@@ -1,5 +1,9 @@
 import express from 'express';
-import { consultarEstoqueController, entradaEstoqueController } from '../controllers/estoque.controllers.js';
+import { 
+    consultarEstoqueController,
+    entradaEstoqueController,
+    saidaEstoqueController
+} from '../controllers/estoque.controllers.js';
 
 const router = express.Router();
 
@@ -10,8 +14,9 @@ router.get('/estoque', consultarEstoqueController);
 
 
 // Entrada de estoque
-router.post('/estoque/:id', entradaEstoqueController)
+router.post('/estoque/:id', entradaEstoqueController);
 
 // Retirar unidades
+router.patch('/estoque/:id', saidaEstoqueController);
 
 export default router;
