@@ -22,6 +22,11 @@ const livroSchema = new mongoose.Schema(
             required: [true, 'A descrição do livro é obrigatória'],
             trim: true
         },
+        categoria: {
+            type: String,
+            required: [true, 'A categoria do livro é obrigatória'],
+            trim: true
+        },
         editora: {
             type: String,
             trim: true
