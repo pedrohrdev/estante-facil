@@ -2,7 +2,8 @@ import express from 'express';
 import { 
     consultarEstoqueController,
     entradaEstoqueController,
-    saidaEstoqueController
+    saidaEstoqueController,
+    consultarLivroEspecificoController
 } from '../controllers/estoque.controllers.js';
 
 const router = express.Router();
@@ -11,7 +12,7 @@ const router = express.Router();
 router.get('/estoque', consultarEstoqueController);
 
 // Consultar livro especifico
-
+router.get('/estoque/:id', consultarLivroEspecificoController);
 
 // Entrada de estoque
 router.post('/estoque/:id', entradaEstoqueController);

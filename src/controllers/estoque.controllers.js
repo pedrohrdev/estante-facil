@@ -16,6 +16,33 @@ export async function consultarEstoqueController(req, res, next) {
 
 };
 
+export async function consultarLivroEspecificoController(req, res, next) {
+
+    try {
+
+        const idLivro = req.params.id;
+
+        const livro = await Livro.findById(idLivro).select(['titulo', 'estoque']);
+
+        if(!livro) {
+            return next(new NaoEncontrado('Livro não encontrado'));
+        }
+
+        return res.status(200).json(
+            {
+                message: "Livro encontrado com sucesso!",
+                livro: livro
+            }
+        )
+
+    } catch(erro) {
+
+        return next(erro)
+
+    }
+
+}
+
 export async function entradaEstoqueController(req, res, next) {
 
     try {
