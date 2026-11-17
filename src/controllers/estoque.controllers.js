@@ -61,7 +61,7 @@ export async function entradaEstoqueController(req, res, next) {
             idLivro,
             { $inc: { estoque: quantidade } },
             { new: true, runValidators: true}
-        );
+        ).select(['titulo', 'estoque']);
 
         // O livro existe?
         if(!livroAtualizado) {
