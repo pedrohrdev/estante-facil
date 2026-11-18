@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema(
         },
         perfil: {
             type: String,
-            enum: ['cliente', 'funcionário', 'admin'],
+            enum: ['cliente', 'funcionario', 'admin'],
             default: 'cliente'
         }
     },
@@ -33,16 +33,14 @@ const userSchema = new mongoose.Schema(
 );
 
 // Hook: roda automaticamente antes de cada save()
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function() {
 
     // Se a senha nao mudou(ex: usuario so trocou o nome), pula.
     // Sem isso, aconteceria o hash de uma hash, e ninguem iria conseguir logar
-    if(!this.isModified('senha')) return next();
+    if(!this.isModified('senha')) return;
 
     // Se tudo ok faazemos o hash
     this.senha = await bcrypt.hash(this.senha, 12);
-
-    next();
 
 });
 
