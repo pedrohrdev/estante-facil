@@ -1,4 +1,5 @@
 import express from 'express';
+import { autenticar } from '../middlewares/auth.middleware.js';
 import { 
     consultarEstoqueController,
     entradaEstoqueController,
@@ -9,15 +10,15 @@ import {
 const router = express.Router();
 
 // Consultar estoque dos livros
-router.get('/estoque', consultarEstoqueController);
+router.get('/estoque', autenticar, consultarEstoqueController);
 
 // Consultar livro especifico
-router.get('/estoque/:id', consultarLivroEspecificoController);
+router.get('/estoque/:id', autenticar, consultarLivroEspecificoController);
 
 // Entrada de estoque
-router.post('/estoque/:id', entradaEstoqueController);
+router.post('/estoque/:id', autenticar, entradaEstoqueController);
 
 // Retirar unidades
-router.patch('/estoque/:id', saidaEstoqueController);
+router.patch('/estoque/:id', autenticar, saidaEstoqueController);
 
 export default router;
