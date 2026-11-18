@@ -1,4 +1,7 @@
-import { registrarUserService } from '../service/auth.services.js';
+import { 
+    registrarUserService,
+    loginUserService
+} from '../service/auth.services.js';
 
 export async function registrarUserController(req, res, next) {
 
@@ -16,6 +19,27 @@ export async function registrarUserController(req, res, next) {
 
     } catch(erro) {
         return next(erro)
+    }
+
+}
+
+export async function loginUserController(req, res, next) {
+
+    try {
+
+        const { email, senha } = req.body;
+
+        const token = await loginUserService(email, senha);
+
+        res.status(200).json(
+            {
+                message: "Login realizado com sucesso!",
+                token: token,
+            }
+        )
+
+    } catch(erro) {
+        return next(erro);
     }
 
 }

@@ -1,5 +1,8 @@
+import jwt from 'jsonwebtoken';
+
 import User from '../models/user.model.js';
 import RecursoJaCadastrado from '../errors/RecursoJaCadastrado.js';
+import NaoAutorizado from '../errors/NaoAutorizado.js';
 
 export async function registrarUserService(nome, email, senha) {
 
@@ -20,3 +23,32 @@ export async function registrarUserService(nome, email, senha) {
     }
 
 };
+
+export async function loginUserService(email, senha) {
+
+    // Buscar user pelo email
+    const userExiste = await User.findOne({ email: email }).select('+senha');
+
+    if(!userExiste) {
+        throw new NaoAutorizado('E-mail ou senha inválidos.')
+    };
+
+    const userComSenhaCorreta = await userExiste.compararSenha(senha)
+    
+    if(!userComSenhaCorreta) {
+        throw new NaoAutorizado('E-mail ou senha inválidos');
+    };
+
+    const token = jwt.sign(
+        {
+            // Informações que serão armazenadas no token
+            id: userExiste.id,
+            perfil: userExiste.perfil,
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+    );
+
+    return token;
+
+}

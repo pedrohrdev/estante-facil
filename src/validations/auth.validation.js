@@ -8,4 +8,11 @@ export const registerSchema = z.object(
         email: z.string().trim().toLowerCase().email('E-mail inválido'),
         senha: z.string().min(8, 'A senha deve ter no mínimo 8 caracteres').max(78, 'A senha deve ter no máximo 72 caracteres')
     }
+);
+
+export const loginSchema = z.object(
+    {
+        email: z.string().trim().toLowerCase().email('E-mail inválido'),
+        senha: z.string().min(1, 'A senha é obrigatória')
+    }
 )
