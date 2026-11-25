@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import AcessoProibido from '../errors/AcessoProibido.js';
 import NaoAutorizado from '../errors/NaoAutorizado.js';
 
 export function autenticar(req, res, next) {
@@ -24,4 +25,18 @@ export function autenticar(req, res, next) {
         return next(new NaoAutorizado('Token inválido ou expirado'))
     }
 
+}
+
+export function autorizar(...perfisPermitidos) {
+    return function (req, res, next) {
+        if (!req.user) {
+            return next(new NaoAutorizado('Autenticação necessária.'));
+        }
+
+        if (!perfisPermitidos.includes(req.user.perfil)) {
+            return next(new AcessoProibido());
+        }
+
+        return next();
+    };
 }
